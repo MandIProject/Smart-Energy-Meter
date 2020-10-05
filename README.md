@@ -184,9 +184,8 @@ Connecting an LCD to the circuit, dropped the voltage input to the sensor from 5
 So, for now, we have removed the LCD screen from the circuit. To access the output values, we are directly using the serial monitor provided in Arduino IDE.
 
 # Final Code
-
-<h1>For Arduino:</h1>
 ```Arduino
+//For Arduino nano
 #include <Filters.h>
 #include <SoftwareSerial.h>
 #include <ArduinoJson.h>
@@ -261,10 +260,7 @@ void loop()
     }
   }
 }
-```
-
-<h1>For Wemos D1 Mini Pro:</h1>
-```Arduino
+//For Wemos D1 mini pro
 #include <SoftwareSerial.h>
 SoftwareSerial s(D6,D5);
 #include <ESP8266WiFi.h>
