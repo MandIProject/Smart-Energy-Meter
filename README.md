@@ -260,6 +260,7 @@ void loop()
     }
   }
 }
+
 //For Wemos D1 mini pro
 #include <SoftwareSerial.h>
 SoftwareSerial s(D6,D5);
