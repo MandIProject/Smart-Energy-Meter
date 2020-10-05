@@ -26,4 +26,6 @@ Soldering Iron and Solder Wire
 60W, 100W and 200W bulbs
 # ACS712 sensor
 Works on the principle of hall effect. An output voltage is generated proportional to the current flowing through the sensor. Our system can measure current up to 20A.
-<img src="https://upload.wikimedia.org/wikipedia/en/1/19/Hall_Effect_Measurement_Setup_for_Electrons.png">
+<div>
+  <img src="https://upload.wikimedia.org/wikipedia/en/1/19/Hall_Effect_Measurement_Setup_for_Electrons.png">
+</div>
