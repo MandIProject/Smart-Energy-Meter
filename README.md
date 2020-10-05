@@ -24,6 +24,13 @@ Multi-meter
 Soldering Iron and Solder Wire
 1kΩ and 2kΩ resistors
 60W, 100W and 200W bulbs
+# Software stack
+<ul>
+  <li>Arduino IDE</li>
+  <li>MIT App Inventor</li>
+  <li>Google Firebase</li>
+  <li>Microsoft Excel</li>
+</ul>
 # ACS712 sensor
 Works on the principle of hall effect. An output voltage is generated proportional to the current flowing through the sensor. Our system can measure current up to 20A.
 <div>
