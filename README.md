@@ -40,4 +40,40 @@ Project on Instructables By https://www.instructables.com/member/e024576/
 
 # Solution to 1st problem
 To overcome this problem, we tried to measure the standard deviation of input current around the 2.5V midpoint. We took 20 readings per second, then measured their standard deviations and then averaged them. In this way, we measured the fluctuations in the analog output of the sensor.
-Then we took 3 blubs of 60W, 100W, and 200W and then connected them to the sensor one by one, to measure the output standard deviations which the sensor was sending to the Arduino. Each bulb was switched on for about a minute and the respective values were recorded. Then we copied the values to an excel sheet. A digital multimeter was connected in series with the bulbs to know the actual RMS currents. Similarly, the current values were noted from the digital multimeter and copied to the excel sheet. In the excel sheet, we plotted a graph between the current and the standard deviations and found the line of best fit. The graph gave us an approximate equation relating to the two data
+Then we took 3 blubs of 60W, 100W, and 200W and then connected them to the sensor one by one, to measure the output standard deviations which the sensor was sending to the Arduino. Each bulb was switched on for about a minute and the respective values were recorded. Then we copied the values to an excel sheet. A digital multimeter was connected in series with the bulbs to know the actual RMS currents. Similarly, the current values were noted from the digital multimeter and copied to the excel sheet. In the excel sheet, we plotted a graph between the current and the standard deviations and found the line of best fit. The graph gave us an approximate equation relating to the two data variable.
+
+# Code for finding the standard deviations
+#include <Filters.h>
+#include <LiquidCrystal.h>
+
+float testFrequency = 50;                     // test signal frequency (Hz)
+float windowLength = 20.0/testFrequency;     // how long to average the signal, for statistist
+int sensorValue = 0;
+float current_amps; // actual measure current
+
+unsigned long printPeriod = 1000; // in milliseconds
+// Track time in milliseconds since last reading 
+unsigned long previousMillis = 0;
+
+void setup() {
+  Serial.begin( 57600 );
+}
+
+void loop() {
+  RunningStatistics inputStats;                 // create statistics to look at the raw test signal
+  inputStats.setWindowSecs( windowLength );
+   
+  while( true ) {   
+    sensorValue = analogRead(A5);  // read the analog in value:
+    inputStats.input(sensorValue);  // log to Stats function
+        
+    if((unsigned long)(millis() - previousMillis) >= printPeriod) {
+      previousMillis = millis();   // update time
+      
+      // display current values to the screen
+      Serial.print( "\n" );
+      // output sigma or variation values associated with the inputValue itsel
+      Serial.print( inputStats.sigma() );
+    }
+  }
+}
