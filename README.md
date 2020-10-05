@@ -178,3 +178,189 @@ void loop()
   }
 }
 ```
+
+# 3rd problem and it's solution
+Connecting an LCD to the circuit, dropped the voltage input to the sensor from 5V to 4.7V DC. Hence, there were significant errors in the data obtained.
+So, for now, we have removed the LCD screen from the circuit. To access the output values, we are directly using the serial monitor provided in Arduino IDE.
+
+# Final Code
+<h1>For Arduino:</h1>
+```Arduino
+#include <Filters.h>
+#include <SoftwareSerial.h>
+#include <ArduinoJson.h>
+
+SoftwareSerial s(5,6);
+
+float testFrequency = 50;                     // test signal frequency (Hz)
+float windowLength = 20.0/testFrequency;     // how long to average the signal, for statistist
+int sensorValue = 0;
+float intercept = -0.0419; // to be adjusted based on calibration testing
+float slope = 0.0473; // to be adjusted based on calibration testing
+float current_amps; // estimated actual current in amps
+float power;
+float energy;
+unsigned long current_time = 0;
+unsigned long previous_time = 0;
+
+unsigned long printPeriod = 1000; // in milliseconds
+// Track time in milliseconds since last reading 
+unsigned long previousMillis = 0;
+
+void setup() 
+{
+  s.begin(9600);
+  Serial.begin( 115200 );// start the serial port
+  pinMode(13,OUTPUT);
+}
+
+void loop() 
+{
+  RunningStatistics inputStats;                 // create statistics to look at the raw test signal
+  inputStats.setWindowSecs( windowLength );
+   
+  while( true ) 
+  {   
+    sensorValue = analogRead(A5);  // read the analog in value:
+    inputStats.input(sensorValue);  // log to Stats function
+        
+    if((unsigned long)(millis() - previousMillis) >= printPeriod) 
+    {
+      previousMillis = millis();   // update time
+      
+      // display current values to the screen
+      Serial.print( "\n" );
+      // output sigma or variation values associated with the inputValue itsel
+      Serial.print( "\tsigma: " ); Serial.print( inputStats.sigma() );
+      // convert signal sigma value to current in amps
+      current_amps = intercept + slope * inputStats.sigma();
+      power = (current_amps)*240;
+      previous_time = current_time;
+      current_time = millis();
+      energy = energy + power*((current_time - previous_time)/3600000.0);
+      digitalWrite(13,HIGH);
+      if(current_amps>=-0.05 && current_amps<=0.05)
+      {
+        power = 0;
+        current_amps = 0;
+        energy = 0;
+        digitalWrite(13,LOW);
+      }
+      Serial.print( "\tamps: " ); Serial.print( current_amps );
+      Serial.print( "\tWatts: " ); Serial.print( power );
+      Serial.print( "\tWh: "); Serial.print( energy );
+      StaticJsonBuffer<1000> jsonBuffer;
+      JsonObject& root = jsonBuffer.createObject();
+      root["data1"] = current_amps;
+      root["data2"] = power;
+      root["data3"] = inputStats.sigma();
+      root["data4"] = energy;
+      if(s.available()>0)
+      {root.printTo(s);}
+    }
+  }
+}
+```
+<h1>For Wemos D1 Mini Pro:</h1>
+```Arduino
+#include <SoftwareSerial.h>
+SoftwareSerial s(D6,D5);
+#include <ESP8266WiFi.h>
+#include <FirebaseArduino.h>
+
+#define FIREBASE_HOST "Your project name on firebase"
+#define FIREBASE_AUTH "Your auth key"
+#define WIFI_SSID "Your wifi ssid"
+#define WIFI_PASSWORD "Your wifi password"
+String apiKey = "Your thingspeak api key";     //  Enter your Write API key from ThingSpeak
+const char* server1 = "api.thingspeak.com";
+
+WiFiClient client;
+
+float data1;
+float data2;
+float data3;
+float data4;
+
+void setup() 
+{
+  s.begin(9600);
+  Serial.begin(9600);
+  Serial.begin(115200);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+  
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+}
+
+void loop() 
+{
+  StaticJsonBuffer<1000> jsonBuffer;
+  JsonObject& root = jsonBuffer.parseObject(s);
+  if (root == JsonObject::invalid())
+  {return;}
+  Serial.println("JSON received and parsed");
+  root.prettyPrintTo(Serial);
+  Serial.print("Data 1 ");
+  Serial.println("");
+  data1=root["data1"];
+  Serial.print(data1);
+  Serial.print("   Data 2 ");
+  data2=root["data2"];
+  Serial.print(data2);
+  Serial.print("          Data 3 ");
+  data3=root["data3"];
+  Serial.print(data3);
+  Serial.print("                 Data 4 ");
+  data4=root["data4"];
+  Serial.print(data4);
+  Serial.println("");
+  Serial.println("---------------------xxxxx--------------------");
+  Firebase.setFloat("Current", data1);
+  Firebase.setFloat("Power", data2);
+  Firebase.setFloat("RawVal", data3);
+  Firebase.setFloat("Energy", data4);
+  if(data1==0.00)
+  {
+    Firebase.setString("Status", "OFF");
+  }
+  else
+  {
+    Firebase.setString("Status", "ON");
+  }
+  if (client.connect(server1,80))   //   "184.106.153.149" or api.thingspeak.com
+  {
+         String postStr = apiKey;
+         postStr += "&field1=";
+         postStr += double(data1);
+         postStr += "\r\n\r\n";
+         postStr += "&field2=";
+         postStr += double(data3);
+         postStr += "\r\n\r\n";
+         postStr += "&field3=";
+         postStr += double(data2);
+         postStr += "\r\n\r\n";
+         postStr += "&field4=";
+         postStr += double(data4);
+         postStr += "\r\n\r\n";
+
+         client.print("POST /update HTTP/1.1\n");
+         client.print("Host: api.thingspeak.com\n");
+         client.print("Connection: close\n");
+         client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n");
+         client.print("Content-Type: application/x-www-form-urlencoded\n");
+         client.print("Content-Length: ");
+         client.print(postStr.length());
+         client.print("\n\n");
+         client.print(postStr);
+  }
+  client.stop();
+}
+```
