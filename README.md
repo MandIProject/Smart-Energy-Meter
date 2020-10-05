@@ -28,5 +28,5 @@ Soldering Iron and Solder Wire
 Works on the principle of hall effect. An output voltage is generated proportional to the current flowing through the sensor. Our system can measure current up to 20A.
 <div>
   <img src="https://upload.wikimedia.org/wikipedia/en/1/19/Hall_Effect_Measurement_Setup_for_Electrons.png">
-  <img src="http://luckyretail.com/Uploadfile/2015.1.30/036694/036694.jpg">
+  <img src="http://luckyretail.com/Uploadfile/2015.1.30/036694/036694.jpg" height="184" width="285">
 </div>
