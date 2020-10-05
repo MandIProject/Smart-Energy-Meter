@@ -3,11 +3,11 @@ SoftwareSerial s(D6,D5);
 #include <ESP8266WiFi.h>
 #include <FirebaseArduino.h>
 
-#define FIREBASE_HOST "smart-meter-bc378.firebaseio.com"
-#define FIREBASE_AUTH "cmLhyNXjNPwCWvaqNKTKu5e3ANmKFAoU9T5MAgMI"
-#define WIFI_SSID "Home_wifi2ghz"
-#define WIFI_PASSWORD "Qwerty7861;"
-String apiKey = "M4H5Y1U303ET9WUD";     //  Enter your Write API key from ThingSpeak
+#define FIREBASE_HOST "Your project name on firebase"
+#define FIREBASE_AUTH "Your auth key"
+#define WIFI_SSID "Your wifi ssid"
+#define WIFI_PASSWORD "Your wifi password"
+String apiKey = "Your thingspeak api key";     //  Enter your Write API key from ThingSpeak
 const char* server1 = "api.thingspeak.com";
 
 WiFiClient client;
