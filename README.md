@@ -43,6 +43,7 @@ To overcome this problem, we tried to measure the standard deviation of input cu
 Then we took 3 blubs of 60W, 100W, and 200W and then connected them to the sensor one by one, to measure the output standard deviations which the sensor was sending to the Arduino. Each bulb was switched on for about a minute and the respective values were recorded. Then we copied the values to an excel sheet. A digital multimeter was connected in series with the bulbs to know the actual RMS currents. Similarly, the current values were noted from the digital multimeter and copied to the excel sheet. In the excel sheet, we plotted a graph between the current and the standard deviations and found the line of best fit. The graph gave us an approximate equation relating to the two data variable.
 
 # Code for finding the standard deviations
+```Arduino
 #include <Filters.h>
 #include <LiquidCrystal.h>
 
@@ -55,19 +56,23 @@ unsigned long printPeriod = 1000; // in milliseconds
 // Track time in milliseconds since last reading 
 unsigned long previousMillis = 0;
 
-void setup() {
+void setup() 
+{
   Serial.begin( 57600 );
 }
 
-void loop() {
+void loop() 
+{
   RunningStatistics inputStats;                 // create statistics to look at the raw test signal
   inputStats.setWindowSecs( windowLength );
    
-  while( true ) {   
+  while( true ) 
+  {   
     sensorValue = analogRead(A5);  // read the analog in value:
     inputStats.input(sensorValue);  // log to Stats function
         
-    if((unsigned long)(millis() - previousMillis) >= printPeriod) {
+    if((unsigned long)(millis() - previousMillis) >= printPeriod) 
+    {
       previousMillis = millis();   // update time
       
       // display current values to the screen
@@ -77,3 +82,4 @@ void loop() {
     }
   }
 }
+```
