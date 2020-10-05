@@ -94,3 +94,9 @@ void loop()
   }
 }
 ```
+
+# 2nd problem and it's solution
+In our project, we are sending the data through the internet to our database, so that our website and the mobile app can access that data. Arduino as such does not have a WIFI chip inbuilt. So, we had to use a separate WIFI chip (ESP8266 node MCU) in serial communication with the Arduino board, to send the data to the database. Here, one could ask why didn’t we just connect the sensor to the node MCU. The problem was, node MCU provides 3.3V max as output voltage for peripherals but the sensor needed at least 5V DC as input for proper working. Therefore, we used two boards here, Arduino for reading and computing the sensor values, and node MCU for sending data to the database.
+
+# Communication between Arduino and Wemos D1 Mini Pro
+The data from the Arduino is sent to the node MCU in JSON format (JavaScript Object Notation) through serial communication. It is a format that uses key-value pairs just like a dictionary. JSON is platform-independent and is lightweight. Hence, communication between Arduino and node MCU becomes faster. Since the system works in real-time, it needs to run fast as possible.
