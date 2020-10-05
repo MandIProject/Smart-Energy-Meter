@@ -35,6 +35,11 @@ Smart alternative to traditional energy meters
   <li>Microsoft Excel</li>
 </ul>
 
+# Circuit Diagram
+<div>
+  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/2020_10_03%207_17%20pm%20Office%20Lens.jpg">
+</div>
+
 # ACS712 sensor
 Works on the principle of hall effect. An output voltage is generated proportional to the current flowing through the sensor. Our system can measure current up to 20A.
 <div>
