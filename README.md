@@ -14,16 +14,19 @@ In homes we can measure the ac current drawn and power consumed by appliances.
 Can also be used as smart over-current protection device.
 Smart alternative to traditional energy meters
 # Components Used
-Arduino Nano
-D1 Mini Pro node MCU V2
-ACS712 20A Sensor
-Connecting Wires
-20 SWG Wire
-12 V DC Adapter
-Multi-meter
-Soldering Iron and Solder Wire
-1kΩ and 2kΩ resistors
-60W, 100W and 200W bulbs
+<ul>
+  <li>Arduino Nano</li>
+  <li>D1 Mini Pro node MCU V2</li>
+  <li>ACS712 20A Sensor</li>
+  <li>Connecting Wires</li>
+  <li>20 SWG Wire</li>
+  <li>12 V DC Adapter</li>
+  <li>Multi-meter</li>
+  <li>Soldering Iron and Solder Wire</li>
+  <li>1kΩ and 2kΩ resistors</li>
+  <li>60W, 100W and 200W bulbs</li>
+</ul>
+
 # Software stack
 <ul>
   <li>Arduino IDE</li>
@@ -31,6 +34,7 @@ Soldering Iron and Solder Wire
   <li>Google Firebase</li>
   <li>Microsoft Excel</li>
 </ul>
+
 # ACS712 sensor
 Works on the principle of hall effect. An output voltage is generated proportional to the current flowing through the sensor. Our system can measure current up to 20A.
 <div>
