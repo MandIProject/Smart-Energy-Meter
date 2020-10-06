@@ -385,4 +385,4 @@ void loop()
 </div>
 
 # Next Steps
-As of now the prototype can measure current and power of resistive loads on AC supply accurately as well as DC loads but that is not our goal. We are currently trying to design a circuit to measure power factor, so that we will be able to measure power drawn by inductive and capacitive loads. The final system will be able to measure current draw, power and energy consumption of all types of loads as well as power factor. The system will show data the apparent power and the real power.
+As of now the prototype can measure current and power of resistive loads on AC supply accurately as well as DC loads but that is not our goal. We are currently trying to design a circuit to measure power factor, so that we will be able to measure power drawn by inductive and capacitive loads. The final system will be able to measure current draw, power and energy consumption of all types of loads as well as power factor. The system will show the apparent power and the real power. Then we will expand this sytem to three phase systems and loads.
