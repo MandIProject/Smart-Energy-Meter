@@ -18,6 +18,7 @@ Smart alternative to traditional energy meters
   <li>Arduino Nano</li>
   <li>D1 Mini Pro node MCU V2</li>
   <li>ACS712 20A Sensor</li>
+  <li>ZMPT101B-sinlge phase AC voltage sensor</li>
   <li>Connecting Wires</li>
   <li>20 SWG Wire</li>
   <li>12 V DC Adapter</li>
