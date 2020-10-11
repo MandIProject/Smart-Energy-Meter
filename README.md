@@ -38,8 +38,7 @@ Smart alternative to traditional energy meters
 
 # Circuit Diagram
 <div>
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/2020_10_03%207_17%20pm%20Office%20Lens.jpg">
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Circuit.jpg">
+  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Sketch%20complete_schem.jpg">
 </div>
 
 # ACS712 sensor
