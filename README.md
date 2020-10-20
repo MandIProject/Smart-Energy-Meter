@@ -79,7 +79,12 @@ Project on Instructables By https://www.instructables.com/member/e024576/
 To overcome this problem, we tried to measure the standard deviation of input current around the 2.5V midpoint. We took 20 readings per second, then measured their standard deviations and then averaged them. In this way, we measured the fluctuations in the analog output of the sensor.
 Then we took 3 blubs of 60W, 100W, and 200W and then connected them to the sensor one by one, to measure the output standard deviations which the sensor was sending to the Arduino. Each bulb was switched on for about a minute and the respective values were recorded. Then we copied the values to an excel sheet. A digital multimeter was connected in series with the bulbs to know the actual RMS currents. Similarly, the current values were noted from the digital multimeter and copied to the excel sheet. In the excel sheet, we plotted a graph between the current and the standard deviations and found the line of best fit. The graph gave us an approximate equation relating to the two data variable.
 <div>
+  <h2>For ACS712</h2>
   <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-5.jpg">
+</div>
+<div>
+  <h2>For ZMPT101B</h2>
+  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/voltage.jpg">
 </div>
 
 # 2nd problem and it's solution
