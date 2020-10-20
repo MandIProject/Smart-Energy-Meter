@@ -21,11 +21,11 @@ Smart alternative to traditional energy meters
   <li>ZMPT101B-sinlge phase AC voltage sensor</li>
   <li>Connecting Wires</li>
   <li>20 SWG Wire</li>
-  <li>12 V DC Adapter</li>
   <li>Multi-meter</li>
   <li>Soldering Iron and Solder Wire</li>
   <li>1kΩ and 2kΩ resistors</li>
   <li>60W, 100W and 200W bulbs</li>
+  <li>Red and vlue led</li>
 </ul>
 
 # Software stack
@@ -34,6 +34,8 @@ Smart alternative to traditional energy meters
   <li>MIT App Inventor</li>
   <li>Google Firebase</li>
   <li>Microsoft Excel</li>
+  <li>HTML</li>
+  <li>Server side framework</li>
 </ul>
 
 # Circuit Diagram
@@ -47,11 +49,24 @@ Works on the principle of hall effect. An output voltage is generated proportion
   <img src="https://upload.wikimedia.org/wikipedia/en/1/19/Hall_Effect_Measurement_Setup_for_Electrons.png">
   <img src="http://luckyretail.com/Uploadfile/2015.1.30/036694/036694.jpg" height="184" width="285">
 </div>
+<ul>
+  <li>Low-noise analog signal path</li>
+  <li>Sensitivity: 100mV/A</li>
+  <li>Measure Current Range: 20A</li>
+  <li>Supply Voltage: 4.5V~5.5V DC</li>
+</ul>
 
 # ZMPT101B AC Voltage Sensor
+ZMPT101B a voltage transform ideal to measure the AC voltage. It has high accuracy, good consistency for voltage and power measurement up to 250V AC. Easy to use and comes with a multi turn trim potentiometer for adjusting the ADC output.
 <div>
   <img src="https://www.autobotic.com.my/image/autobotic/image/cache/data/all_product_images/product-9129/4126-3-700x700.jpg">
 </div>
+<ul>
+  <li>Output Signal: Analog 0-5V</li>
+  <li>Measure within 250V AC</li>
+  <li>Onboard micro-precision voltage transformer</li>
+  <li>Operating Voltage: DC 5V-30V</li>
+</ul>
 
 # 1st Problem
 The alternating current generates a sine wave. The values vary over a period of time from negative to positive. Therefore, the RMS value of the current is considered. Now, the ACS712 sensor needs 5V DC to function properly. The sensor keeps 2.5V as the mid-point and measures the proportional voltage around this mid-point. So, the range varies from 0-5V in the output of the sensor with 2.5V as mid-point, which corresponds to the 0-point.
@@ -67,316 +82,15 @@ Then we took 3 blubs of 60W, 100W, and 200W and then connected them to the senso
   <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-5.jpg">
 </div>
 
-# Code for finding the standard deviations
-```Arduino
-#include <Filters.h>
-#include <LiquidCrystal.h>
-
-float testFrequency = 50;                     // test signal frequency (Hz)
-float windowLength = 20.0/testFrequency;     // how long to average the signal, for statistist
-int sensorValue = 0;
-float current_amps; // actual measure current
-
-unsigned long printPeriod = 1000; // in milliseconds
-// Track time in milliseconds since last reading 
-unsigned long previousMillis = 0;
-
-void setup() 
-{
-  Serial.begin( 57600 );
-}
-
-void loop() 
-{
-  RunningStatistics inputStats;                 // create statistics to look at the raw test signal
-  inputStats.setWindowSecs( windowLength );
-   
-  while( true ) 
-  {   
-    sensorValue = analogRead(A5);  // read the analog in value:
-    inputStats.input(sensorValue);  // log to Stats function
-        
-    if((unsigned long)(millis() - previousMillis) >= printPeriod) 
-    {
-      previousMillis = millis();   // update time
-      
-      // display current values to the screen
-      Serial.print( "\n" );
-      // output sigma or variation values associated with the inputValue itsel
-      Serial.print( inputStats.sigma() );
-    }
-  }
-}
-```
-
 # 2nd problem and it's solution
 In our project, we are sending the data through the internet to our database, so that our website and the mobile app can access that data. Arduino as such does not have a WIFI chip inbuilt. So, we had to use a separate WIFI chip (ESP8266 node MCU) in serial communication with the Arduino board, to send the data to the database. Here, one could ask why didn’t we just connect the sensor to the node MCU. The problem was, node MCU provides 3.3V max as output voltage for peripherals but the sensor needed at least 5V DC as input for proper working. Therefore, we used two boards here, Arduino for reading and computing the sensor values, and node MCU for sending data to the database.
 
 # Communication between Arduino and Wemos D1 Mini Pro
 The data from the Arduino is sent to the node MCU in JSON format (JavaScript Object Notation) through serial communication. It is a format that uses key-value pairs just like a dictionary. JSON is platform-independent and is lightweight. Hence, communication between Arduino and node MCU becomes faster. Since the system works in real-time, it needs to run fast as possible.
 
-# Code for 2nd problem
-```Arduino
-#include <Filters.h>
-#include <SoftwareSerial.h>
-#include <ArduinoJson.h>
-
-SoftwareSerial s(5,6);
-
-float testFrequency = 50;                     // test signal frequency (Hz)
-float windowLength = 20.0/testFrequency;     // how long to average the signal, for statistist
-int sensorValue = 0;
-float intercept = -0.0419; // to be adjusted based on calibration testing
-float slope = 0.0473; // to be adjusted based on calibration testing
-float current_amps; // estimated actual current in amps
-float power;
-float energy;
-unsigned long current_time = 0;
-unsigned long previous_time = 0;
-
-unsigned long printPeriod = 1000; // in milliseconds
-// Track time in milliseconds since last reading 
-unsigned long previousMillis = 0;
-
-void setup() 
-{
-  s.begin(9600);
-  Serial.begin( 115200 );// start the serial port
-  pinMode(13,OUTPUT);
-}
-
-void loop() 
-{
-  RunningStatistics inputStats;                 // create statistics to look at the raw test signal
-  inputStats.setWindowSecs( windowLength );
-   
-  while( true ) 
-  {   
-    sensorValue = analogRead(A5);  // read the analog in value:
-    inputStats.input(sensorValue);  // log to Stats function
-        
-    if((unsigned long)(millis() - previousMillis) >= printPeriod) 
-    {
-      previousMillis = millis();   // update time
-      
-      // display current values to the screen
-      Serial.print( "\n" );
-      // output sigma or variation values associated with the inputValue itsel
-      Serial.print( "\tsigma: " ); Serial.print( inputStats.sigma() );
-      // convert signal sigma value to current in amps
-      current_amps = intercept + slope * inputStats.sigma();
-      power = (current_amps)*240;
-      previous_time = current_time;
-      current_time = millis();
-      energy = energy + power*((current_time - previous_time)/3600000.0);
-      digitalWrite(13,HIGH);
-      if(current_amps>=-0.05 && current_amps<=0.05)
-      {
-        power = 0;
-        current_amps = 0;
-        energy = 0;
-        digitalWrite(13,LOW);
-      }
-      Serial.print( "\tamps: " ); Serial.print( current_amps );
-      Serial.print( "\tWatts: " ); Serial.print( power );
-      Serial.print( "\tWh: "); Serial.print( energy );
-      StaticJsonBuffer<1000> jsonBuffer;
-      JsonObject& root = jsonBuffer.createObject();
-      root["data1"] = current_amps;
-      root["data2"] = power;
-      root["data3"] = inputStats.sigma();
-      root["data4"] = energy;
-      if(s.available()>0)
-      {root.printTo(s);}
-    }
-  }
-}
-```
-
 # 3rd problem and it's solution
 Connecting an LCD to the circuit, dropped the voltage input to the sensor from 5V to 4.7V DC. Hence, there were significant errors in the data obtained.
 So, for now, we have removed the LCD screen from the circuit. To access the output values, we are directly using the serial monitor provided in Arduino IDE.
-
-# Final Code
-```Arduino
-//For Arduino nano
-#include <Filters.h>
-#include <SoftwareSerial.h>
-#include <ArduinoJson.h>
-
-SoftwareSerial s(5,6);
-
-float testFrequency = 50;                     // test signal frequency (Hz)
-float windowLength = 20.0/testFrequency;     // how long to average the signal, for statistist
-int sensorValue = 0;
-float intercept = -0.0419; // to be adjusted based on calibration testing
-float slope = 0.0473; // to be adjusted based on calibration testing
-float current_amps; // estimated actual current in amps
-float power;
-float energy;
-unsigned long current_time = 0;
-unsigned long previous_time = 0;
-
-unsigned long printPeriod = 1000; // in milliseconds
-// Track time in milliseconds since last reading 
-unsigned long previousMillis = 0;
-
-void setup() 
-{
-  s.begin(9600);
-  Serial.begin( 115200 );// start the serial port
-  pinMode(13,OUTPUT);
-}
-
-void loop() 
-{
-  RunningStatistics inputStats;                 // create statistics to look at the raw test signal
-  inputStats.setWindowSecs( windowLength );
-   
-  while( true ) 
-  {   
-    sensorValue = analogRead(A5);  // read the analog in value:
-    inputStats.input(sensorValue);  // log to Stats function
-        
-    if((unsigned long)(millis() - previousMillis) >= printPeriod) 
-    {
-      previousMillis = millis();   // update time
-      
-      // display current values to the screen
-      Serial.print( "\n" );
-      // output sigma or variation values associated with the inputValue itsel
-      Serial.print( "\tsigma: " ); Serial.print( inputStats.sigma() );
-      // convert signal sigma value to current in amps
-      current_amps = intercept + slope * inputStats.sigma();
-      power = (current_amps)*240;
-      previous_time = current_time;
-      current_time = millis();
-      energy = energy + power*((current_time - previous_time)/3600000.0);
-      digitalWrite(13,HIGH);
-      if(current_amps>=-0.05 && current_amps<=0.05)
-      {
-        power = 0;
-        current_amps = 0;
-        energy = 0;
-        digitalWrite(13,LOW);
-      }
-      Serial.print( "\tamps: " ); Serial.print( current_amps );
-      Serial.print( "\tWatts: " ); Serial.print( power );
-      Serial.print( "\tWh: "); Serial.print( energy );
-      StaticJsonBuffer<1000> jsonBuffer;
-      JsonObject& root = jsonBuffer.createObject();
-      root["data1"] = current_amps;
-      root["data2"] = power;
-      root["data3"] = inputStats.sigma();
-      root["data4"] = energy;
-      if(s.available()>0)
-      {root.printTo(s);}
-    }
-  }
-}
-
-//For Wemos D1 mini pro
-#include <SoftwareSerial.h>
-SoftwareSerial s(D6,D5);
-#include <ESP8266WiFi.h>
-#include <FirebaseArduino.h>
-
-#define FIREBASE_HOST "Your project name on firebase"
-#define FIREBASE_AUTH "Your auth key"
-#define WIFI_SSID "Your wifi ssid"
-#define WIFI_PASSWORD "Your wifi password"
-String apiKey = "Your thingspeak api key";     //  Enter your Write API key from ThingSpeak
-const char* server1 = "api.thingspeak.com";
-
-WiFiClient client;
-
-float data1;
-float data2;
-float data3;
-float data4;
-
-void setup() 
-{
-  s.begin(9600);
-  Serial.begin(9600);
-  Serial.begin(115200);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("connecting");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(500);
-  }
-  Serial.println();
-  Serial.print("connected: ");
-  Serial.println(WiFi.localIP());
-  
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-}
-
-void loop() 
-{
-  StaticJsonBuffer<1000> jsonBuffer;
-  JsonObject& root = jsonBuffer.parseObject(s);
-  if (root == JsonObject::invalid())
-  {return;}
-  Serial.println("JSON received and parsed");
-  root.prettyPrintTo(Serial);
-  Serial.print("Data 1 ");
-  Serial.println("");
-  data1=root["data1"];
-  Serial.print(data1);
-  Serial.print("   Data 2 ");
-  data2=root["data2"];
-  Serial.print(data2);
-  Serial.print("          Data 3 ");
-  data3=root["data3"];
-  Serial.print(data3);
-  Serial.print("                 Data 4 ");
-  data4=root["data4"];
-  Serial.print(data4);
-  Serial.println("");
-  Serial.println("---------------------xxxxx--------------------");
-  Firebase.setFloat("Current", data1);
-  Firebase.setFloat("Power", data2);
-  Firebase.setFloat("RawVal", data3);
-  Firebase.setFloat("Energy", data4);
-  if(data1==0.00)
-  {
-    Firebase.setString("Status", "OFF");
-  }
-  else
-  {
-    Firebase.setString("Status", "ON");
-  }
-  if (client.connect(server1,80))   //   "184.106.153.149" or api.thingspeak.com
-  {
-         String postStr = apiKey;
-         postStr += "&field1=";
-         postStr += double(data1);
-         postStr += "\r\n\r\n";
-         postStr += "&field2=";
-         postStr += double(data3);
-         postStr += "\r\n\r\n";
-         postStr += "&field3=";
-         postStr += double(data2);
-         postStr += "\r\n\r\n";
-         postStr += "&field4=";
-         postStr += double(data4);
-         postStr += "\r\n\r\n";
-
-         client.print("POST /update HTTP/1.1\n");
-         client.print("Host: api.thingspeak.com\n");
-         client.print("Connection: close\n");
-         client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n");
-         client.print("Content-Type: application/x-www-form-urlencoded\n");
-         client.print("Content-Length: ");
-         client.print(postStr.length());
-         client.print("\n\n");
-         client.print(postStr);
-  }
-  client.stop();
-}
-```
 
 <div>
   <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20200903_005648.jpg">
