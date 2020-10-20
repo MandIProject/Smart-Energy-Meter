@@ -124,5 +124,14 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
   <img widht="150" height="150" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201020_141112.jpg">
 </div>
 
+# System under load
+<div>
+  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030337.jpg">
+  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030535_1.jpg">
+  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030218.jpg">
+  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030239.jpg">
+  <img widht="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030148.jpg">
+</div>
+
 # Next Steps
 As of now the prototype can measure current and power of resistive loads on AC supply accurately as well as DC loads but that is not our goal. We are currently trying to design a circuit to measure power factor, so that we will be able to measure power drawn by inductive and capacitive loads. The final system will be able to measure current draw, power and energy consumption of all types of loads as well as power factor. The system will show the apparent power and the real power. Then we will expand this sytem to three phase systems and loads.
