@@ -92,17 +92,7 @@ The data from the Arduino is sent to the node MCU in JSON format (JavaScript Obj
 Connecting an LCD to the circuit, dropped the voltage input to the sensor from 5V to 4.7V DC. Hence, there were significant errors in the data obtained.
 So, for now, we have removed the LCD screen from the circuit. To access the output values, we are directly using the serial monitor provided in Arduino IDE.
 
-<div>
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20200903_005648.jpg">
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20200828_225250.jpg">
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20200828_223402.jpg">
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20200828_223356.jpg">
-</div>
-
 # Our app made using MIT App Inventor
-<div>
-  <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Screenshot_2020-10-05-22-34-49-120_appinventor.ai_routpratik2001.Smart_Current_and_Power_Monitoring_System.jpg">
-</div>
 
 # Next Steps
 As of now the prototype can measure current and power of resistive loads on AC supply accurately as well as DC loads but that is not our goal. We are currently trying to design a circuit to measure power factor, so that we will be able to measure power drawn by inductive and capacitive loads. The final system will be able to measure current draw, power and energy consumption of all types of loads as well as power factor. The system will show the apparent power and the real power. Then we will expand this sytem to three phase systems and loads.
