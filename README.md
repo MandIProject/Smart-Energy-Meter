@@ -102,7 +102,7 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
   <img src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Screenshot_2020-10-21-03-11-37-927_appinventor.ai_routpratik2001.Smart_Current_and_Power_Monitoring_System.jpg">
 </div>
 
-# Database for android app
+# Database for android app made using Google Firebase
 <div>
   <img widht="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_032142.jpg">
   <img widht="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_031154.jpg">
