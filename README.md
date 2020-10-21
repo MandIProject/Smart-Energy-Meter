@@ -134,8 +134,8 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
 <div>
   <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030337.jpg">
   <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030535_1.jpg">
-  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030218.jpg">
-  <img width="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030239.jpg">
+  <img width="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030218.jpg">
+  <img width="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030239.jpg">
   <img widht="150" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_030148.jpg">
 </div>
 
