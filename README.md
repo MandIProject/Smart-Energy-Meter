@@ -1,10 +1,10 @@
 # Smart-Energy-Meter
 Smart alternative to traditional energy meters currently in use. First prototype, a lot of work is to be done. Initial prototype is successful and works accurately for resistive loads.
 # Abstract
-Measurement of AC/DC current drawn and power consumed by devices using ACS712 sensor and Arduino nano and calculating the energy used during operation by recording the time for which the device was working.
-For AC - power can be measured easily once current is calculated since normal household supply voltage in the sockets is 220V - 240V. For DC we will use a voltage divider circuit using resistors or a voltage sensor connected to the Arduino analog pin to measure the voltage.
+Measurement of AC/DC current drawn and power consumed by devices using ACS712 sensor and Arduino nano and calculating the energy used during operation by recording the time for which the device was working, with remote on/off capabilities.
+For AC - power can be measured easily once current is calculated since normal household supply voltage in the sockets is 220V - 240V(here we are using ZMPT101B voltage sensor sensor for accurate meausrement). For DC we will use a voltage divider circuit using resistors or a voltage sensor connected to the Arduino analog pin to measure the voltage.
 Then we will send the measured data to a smartphone and a website(thingspeak.com) over WIFI and internet.
-Visualization of the recorded data will be in the form of graphs and numeric displays on the website using MATLAB analytics.
+Visualization of the recorded data will be in the form of graphs and numeric displays on the website(thingspeak.com) using MATLAB analytics.
 Data will also be displayed on an LCD screen connected to the circuit.
 The data can also be recorded in excel sheet using MATLAB analytics, after it is sent to the website.
 # Scope
