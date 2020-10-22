@@ -104,9 +104,9 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
 
 # Graphs visualized on ThingSpeak.com
 <div>
-  <img width="250" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-1.jpg">
-  <img width="250" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-2.jpg">
-  <img width="250" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-3.jpg">
+  <img width="300" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-1.jpg">
+  <img width="300" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-2.jpg">
+  <img width="300" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-3.jpg">
 </div>
 
 # Our android app made using MIT App Inventor
