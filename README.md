@@ -111,12 +111,8 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
 # Switiching operation for appliance by developing a web app
 <div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_032308.jpg">
-</div>
-<div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_032253.jpg">
-</div><div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Screenshot_2020-10-21-03-22-45-983_com.android.chrome.jpg">
-</div><div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Screenshot_2020-10-21-03-23-02-206_com.android.chrome.jpg">
 </div>
 
