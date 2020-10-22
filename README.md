@@ -26,6 +26,7 @@ Smart alternative to traditional energy meters
   <li>1kΩ and 2kΩ resistors</li>
   <li>60W, 100W and 200W bulbs</li>
   <li>Red and blue led</li>
+  <li>5V Relay</li>
 </ul>
 
 # Software stack
