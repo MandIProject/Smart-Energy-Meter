@@ -102,6 +102,13 @@ The data from the Arduino is sent to the node MCU in JSON format (JavaScript Obj
 Connecting an LCD to the circuit, dropped the voltage input to the sensor from 5V to 4.7V DC. Hence, there were significant errors in the data obtained.
 So, for now, we have removed the LCD screen from the circuit. To access the output values, we are directly using the serial monitor provided in Arduino IDE.
 
+# Graphs visualized on ThingSpeak.com
+<div>
+  <img width="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-1.jpg">
+  <img width="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-2.jpg">
+  <img width="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/pic-3.jpg">
+</div>
+
 # Our android app made using MIT App Inventor
 <div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/Screenshot_2020-10-21-03-11-37-927_appinventor.ai_routpratik2001.Smart_Current_and_Power_Monitoring_System.jpg">
