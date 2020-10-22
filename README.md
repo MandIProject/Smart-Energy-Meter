@@ -25,7 +25,7 @@ Smart alternative to traditional energy meters
   <li>Soldering Iron and Solder Wire</li>
   <li>1kΩ and 2kΩ resistors</li>
   <li>60W, 100W and 200W bulbs</li>
-  <li>Red and vlue led</li>
+  <li>Red and blue led</li>
 </ul>
 
 # Software stack
