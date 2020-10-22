@@ -108,7 +108,7 @@ So, for now, we have removed the LCD screen from the circuit. To access the outp
   <img widht="250" height="250" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_031154.jpg">
 </div>
 
-# Switiching operation for appliance by developing a web app
+# Switiching operation for appliance(proof of concept using a LED)
 <div>
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_032308.jpg">
   <img width="200" height="400" src="https://raw.githubusercontent.com/MandIProject/Smart-Energy-Meter/main/IMG_20201021_032253.jpg">
